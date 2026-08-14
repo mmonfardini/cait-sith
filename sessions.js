@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const config = require('./config');
 
 const SESSIONS_DIR = path.join(__dirname, 'sessions');
 const MAX_HISTORY = 20;
@@ -23,7 +24,7 @@ function cleanupStaleSessions() {
       }
     }
   } catch (e) { /* empty */ }
-  if (cleaned) console.log(`[SESSION] Limpos ${cleaned} sessoes inativas (>24h)`);
+  if (cleaned) console.log(`[SESSION] Cleaned ${cleaned} stale sessions (>24h)`);
 }
 
 function safeThreadId(raw) {
@@ -43,16 +44,19 @@ function loadHistory(threadId) {
 
 function saveHistory(threadId, messages) {
   const fp = path.join(SESSIONS_DIR, `${threadId}.json`);
+  const tmp = fp + '.tmp';
   const trimmed = messages.slice(-MAX_HISTORY);
-  fs.writeFileSync(fp, JSON.stringify({ threadId, messages: trimmed, updated: Date.now() }));
+  fs.writeFileSync(tmp, JSON.stringify({ threadId, messages: trimmed, updated: Date.now() }));
+  fs.renameSync(tmp, fp);
 }
 
 function buildContextPrompt(history, newMessage) {
   if (!history.length) return newMessage;
+  const botName = config.get('bot.name', 'Bot');
   const lines = history.map(m =>
-    `${m.role === 'user' ? 'Usuario' : 'BIA'}: ${m.content}`
+    `${m.role === 'user' ? 'User' : botName}: ${m.content}`
   ).join('\n');
-  return `Historico da conversa:\n${lines}\n\nUsuario: ${newMessage}\nBIA:`;
+  return `Conversation history:\n${lines}\n\nUser: ${newMessage}\n${botName}:`;
 }
 
 module.exports = {

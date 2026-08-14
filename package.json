@@ -1,6 +1,6 @@
 {
   "name": "cait-sith",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Self-hosted AI assistant for Google Chat — bring your own LLM, optional RAG over Google Drive",
   "main": "server.js",
   "scripts": {

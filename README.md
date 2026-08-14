@@ -44,6 +44,8 @@ docker compose exec ollama ollama pull nomic-embed-text
    - **Functionality**: receive 1:1 and space messages
 4. Deploy behind a reverse proxy with HTTPS (nginx, Traefik, Cloudflare Tunnel, etc.)
 
+> **Security note:** This bot does not verify the authenticity of incoming webhook requests. Anyone who knows your endpoint URL can send messages. For production, restrict access at the network level (firewall, IP allowlist) or add [Google Chat verification](https://developers.google.com/workspace/chat/verify-requests) to `server.js`.
+
 > Google Chat apps use the [Workspace Add-on response format](https://developers.google.com/workspace/add-ons), not the legacy Chat API format. This bot handles that via `chat-response.js`.
 
 ## RAG Setup (Optional)
