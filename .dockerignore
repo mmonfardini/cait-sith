@@ -1,0 +1,8 @@
+.git
+node_modules
+sessions
+config.yaml
+.env
+service-account.json
+*.log
+*.md

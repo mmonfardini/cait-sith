@@ -1,0 +1,18 @@
+{
+  "name": "cait-sith",
+  "version": "0.1.0",
+  "description": "Self-hosted AI assistant for Google Chat — bring your own LLM, optional RAG over Google Drive",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js && node --check access-policy.js && node --check config.js",
+    "index": "python3 rag/indexer.py",
+    "index:dry": "python3 rag/indexer.py --dry-run"
+  },
+  "keywords": ["google-chat", "chatbot", "ai", "rag", "ollama", "supabase"],
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.2.1",
+    "js-yaml": "^4.1.0"
+  }
+}

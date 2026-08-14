@@ -1,0 +1,55 @@
+# cait-sith - Configuration
+# Copy to config.yaml and edit.
+
+bot:
+  name: "My Bot"
+  port: 3005
+  welcome_message: "Hi! I'm your AI assistant. Ask me anything!"
+  system_prompt: |
+    You are a helpful AI assistant.
+    Answer questions clearly and concisely.
+    If you don't know something, say so honestly.
+
+llm:
+  # Any OpenAI-compatible endpoint (Ollama, vLLM, LiteLLM, OpenAI, etc.)
+  endpoint: "http://localhost:11434/v1/chat/completions"
+  model: "llama3"
+  max_tokens: 2048
+  timeout_ms: 15000
+  fallback_message: "I'm having trouble right now. Please try again in a moment."
+
+rag:
+  enabled: false
+  embedding_model: "nomic-embed-text"
+  ollama_url: "http://localhost:11434"
+  chunk_size: 800
+  chunk_overlap: 150
+  top_k: 5
+  # Google Drive folder IDs to index (recursive)
+  drive_folders: []
+  # Path to Google service account JSON
+  service_account_path: "./service-account.json"
+
+supabase:
+  url: ""
+  service_key: ""
+
+access:
+  admins: []
+  default_profile: "user"
+  profiles:
+    admin:
+      authorized: true
+      can_use_rag: true
+    user:
+      authorized: true
+      can_use_rag: true
+    blocked:
+      authorized: false
+      can_use_rag: false
+  # Map Google Chat space IDs to profiles
+  spaces: {}
+
+# Plugin handlers - load custom .js files from ./handlers/
+handlers:
+  enabled: false
